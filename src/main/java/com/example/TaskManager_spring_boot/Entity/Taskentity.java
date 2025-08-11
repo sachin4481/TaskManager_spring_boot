@@ -15,7 +15,7 @@ public class Taskentity {
     private String title;
     private String description;
     private Date deadline;
-    private boolean compeleted;
+    private Boolean completed;
 
 
 }

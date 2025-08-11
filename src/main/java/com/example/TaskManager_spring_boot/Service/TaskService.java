@@ -4,6 +4,8 @@ import com.example.TaskManager_spring_boot.Entity.Taskentity;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -11,15 +13,15 @@ import java.util.Date;
 public class TaskService {
     private ArrayList<Taskentity> tasks=new ArrayList<>();
     private int taskId=1;
+    private final SimpleDateFormat DeadlineFormate=new SimpleDateFormat("yyyy-MM-dd");
 
-    public Taskentity addTask(String title,String descripation,String Deadline)
-    {
+    public Taskentity addTask(String title,String description,String Deadline) throws ParseException {
             Taskentity task=new Taskentity();
             task.setId(taskId);
             task.setTitle(title);
-            task.setDescription(descripation);
-          //  task.setDeadline(new Date(Deadline));
-            task.setCompeleted(false);
+            task.setDescription(description);
+            task.setDeadline(DeadlineFormate.parse(Deadline));
+            task.setCompleted(false);
             tasks.add(task);
             taskId++;
             return  task;
@@ -39,6 +41,27 @@ public class TaskService {
         }
         return  null;
 
+
+    }
+
+    public Taskentity updateTask(int id,String Descripation,String Deadline,Boolean Completed) throws ParseException{
+        Taskentity task=getTaskById(id);
+        if(task==null)
+            return null;
+
+        if(Descripation != null)
+        {
+            task.setDescription(Descripation);
+        }
+        if(Deadline!=null)
+        {
+            task.setDeadline(DeadlineFormate.parse(Deadline));
+
+        }
+        if(Completed != null ){
+                task.setCompleted(Completed);
+        }
+        return  task;
 
     }
 }

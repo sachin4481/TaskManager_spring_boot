@@ -1,6 +1,5 @@
 package com.example.TaskManager_spring_boot.Dto;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreateTaskDto {
+public class UpadateTaskDto {
 
-    String title;
     String description;
     String deadline;
+    Boolean completed;
 }
