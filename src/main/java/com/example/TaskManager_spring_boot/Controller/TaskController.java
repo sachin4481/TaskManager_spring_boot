@@ -3,7 +3,9 @@ package com.example.TaskManager_spring_boot.Controller;
 import com.example.TaskManager_spring_boot.Dto.ErrorHandleDto;
 import com.example.TaskManager_spring_boot.Dto.UpadateTaskDto;
 import com.example.TaskManager_spring_boot.Entity.Taskentity;
+import com.example.TaskManager_spring_boot.Service.NoteService;
 import com.example.TaskManager_spring_boot.Service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.TaskManager_spring_boot.Dto.CreateTaskDto;
@@ -17,6 +19,10 @@ import java.util.List;
 public class TaskController {
 
     private final TaskService taskService;
+
+    @Autowired
+    private NoteService noteService;
+
 
     public TaskController(TaskService taskService) {
         this.taskService=taskService;
@@ -34,10 +40,12 @@ public class TaskController {
     public ResponseEntity<Taskentity> getTaskById(@PathVariable int id)
     {
         var task=taskService.getTaskById(id);
+        var notes=noteService.getNotesForTask(id);
         if(task==null)
         {
           return  ResponseEntity.notFound().build();
         }
+        task.setNotes(notes);
         return  ResponseEntity.ok(task);
     }
 
